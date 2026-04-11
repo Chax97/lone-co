@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #1E3A5F;
+  --gold: #C5A55A;
+  --gold-light: #D4B76A;
+  --obsidian: #1E1E24;
+  --charcoal: #404048;
+  --warm-gray: #8A8680;
+  --light-gray: #E8E4DE;
+  --cream: #FAF8F4;
+  --ivory: #F5F0E8;
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-obsidian: var(--obsidian);
+  --color-charcoal: var(--charcoal);
+  --color-warm-gray: var(--warm-gray);
+  --color-light-gray: var(--light-gray);
+  --color-cream: var(--cream);
+  --color-ivory: var(--ivory);
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Scroll reveal ── */
+.sr {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sr.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger children */
+.sr-stagger > .sr:nth-child(1) { transition-delay: 0s; }
+.sr-stagger > .sr:nth-child(2) { transition-delay: 0.08s; }
+.sr-stagger > .sr:nth-child(3) { transition-delay: 0.16s; }
+.sr-stagger > .sr:nth-child(4) { transition-delay: 0.24s; }
+.sr-stagger > .sr:nth-child(5) { transition-delay: 0.32s; }
+.sr-stagger > .sr:nth-child(6) { transition-delay: 0.40s; }
+
+/* ── Marquee ticker ── */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 30s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ── Service row hover ── */
+.service-row {
+  transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.service-row:hover {
+  padding-left: 1.5rem;
+}
+
+/* ── Link arrow ── */
+.arrow-link svg {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.arrow-link:hover svg {
+  transform: translate(4px, 4px);
+}
