@@ -1,29 +1,30 @@
 import type { Metadata } from "next";
-import { Montserrat, Inter, Playfair_Display } from "next/font/google";
+import { Syne, DM_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import Preloader from "@/components/Preloader";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
 import AnalyticsLoader from "@/components/AnalyticsLoader";
 
-const montserrat = Montserrat({
+const syne = Syne({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-montserrat",
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const inter = Inter({
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-playfair",
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -35,8 +36,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB" className={`${montserrat.variable} ${inter.variable} ${playfair.variable}`}>
+    <html lang="en-GB" className={`${syne.variable} ${outfit.variable} ${dmSans.variable}`}>
       <body className="min-h-screen flex flex-col bg-cream text-charcoal">
+        <Preloader />
         <Navigation />
         <main className="flex-1">{children}</main>
         <Footer />

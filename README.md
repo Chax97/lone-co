@@ -1,8 +1,8 @@
 # Lone & Co — Website
 
-AI consulting website for UK businesses. Next.js 15, Tailwind CSS 4, TypeScript.
+AI consulting website for UK businesses. 
 
-Design inspired by plastic.design: editorial layout, scroll-triggered reveals, numbered service rows, generous whitespace, bold typography.
+
 
 ## Setup
 

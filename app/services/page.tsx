@@ -57,11 +57,11 @@ export default function ServicesPage() {
       <section className="bg-navy pt-40 pb-24 lg:pt-52 lg:pb-32 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[.03] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "200px" }} />
         <ScrollReveal className="relative max-w-[1200px] mx-auto px-6 sm:px-10">
-          <p className="sr text-[.7rem] font-semibold tracking-[.2em] uppercase text-gold mb-8" style={f.mono}>Services</p>
-          <h1 className="sr text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-[1.05]" style={f.serif}>
+          <p className="sr-child text-[.7rem] font-semibold tracking-[.2em] uppercase text-gold mb-8" style={f.mono}>Services</p>
+          <h1 className="sr-child text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-[1.05]" style={f.serif}>
             Three services.<br />Fixed prices.
           </h1>
-          <p className="sr text-base text-white/40 leading-relaxed mt-8 max-w-[400px]" style={f.sans}>
+          <p className="sr-child text-base text-white/40 leading-relaxed mt-8 max-w-[400px]" style={f.sans}>
             We keep things simple. You pick what you need, we tell you what it costs, and then we get on with it.
           </p>
         </ScrollReveal>
@@ -74,10 +74,10 @@ export default function ServicesPage() {
           <ScrollReveal className="max-w-[1200px] mx-auto px-6 sm:px-10">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-14 lg:gap-24">
               <div>
-                <span className="sr text-sm text-gold font-semibold" style={f.mono}>{svc.num}</span>
+                <span className="sr-child text-sm text-gold font-semibold" style={f.mono}>{svc.num}</span>
                 <h2 className={`sr text-3xl sm:text-4xl font-bold mt-3 mb-3 leading-tight ${svc.dark ? "text-white" : "text-obsidian"}`} style={f.serif}>{svc.title}</h2>
-                <p className="sr text-sm text-gold font-semibold" style={f.mono}>{svc.price}</p>
-                <Link href="/contact" className="sr arrow-link inline-flex items-center gap-3 text-gold hover:text-gold-light transition-colors mt-8" style={f.mono}>
+                <p className="sr-child text-sm text-gold font-semibold" style={f.mono}>{svc.price}</p>
+                <Link href="/contact" className="sr-child arrow-link inline-flex items-center gap-3 text-gold hover:text-gold-light transition-colors mt-8" style={f.mono}>
                   <span className="text-sm font-semibold tracking-wide">Enquire</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7l10 10M7 17h10V7" /></svg>
                 </Link>
@@ -86,7 +86,7 @@ export default function ServicesPage() {
                 <p className={`sr text-sm leading-relaxed mb-8 ${svc.dark ? "text-white/60" : "text-charcoal"}`} style={f.sans}>{svc.body}</p>
                 <div className="sr-stagger space-y-3">
                   {svc.includes.map((item) => (
-                    <div key={item} className="sr flex items-start gap-3">
+                    <div key={item} className="sr-child flex items-start gap-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-gold mt-2 flex-shrink-0" />
                       <span className={`text-sm ${svc.dark ? "text-white/40" : "text-warm-gray"}`} style={f.sans}>{item}</span>
                     </div>
@@ -101,11 +101,11 @@ export default function ServicesPage() {
       {/* ═══ PROCESS ═══ */}
       <section className="bg-cream py-28 lg:py-40 border-t border-light-gray">
         <ScrollReveal className="max-w-[1200px] mx-auto px-6 sm:px-10">
-          <p className="sr text-[.7rem] font-semibold tracking-[.2em] uppercase text-gold mb-5" style={f.mono}>How we work</p>
-          <h2 className="sr text-3xl sm:text-4xl font-bold text-obsidian mb-20" style={f.serif}>Our Process</h2>
+          <p className="sr-child text-[.7rem] font-semibold tracking-[.2em] uppercase text-gold mb-5" style={f.mono}>How we work</p>
+          <h2 className="sr-child text-3xl sm:text-4xl font-bold text-obsidian mb-20" style={f.serif}>Our Process</h2>
           <div className="sr-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
             {processSteps.map((step) => (
-              <div key={step.num} className="sr">
+              <div key={step.num} className="sr-child">
                 <span className="text-sm text-gold font-semibold" style={f.mono}>{step.num}</span>
                 <h3 className="text-lg font-bold text-obsidian mt-2 mb-3" style={f.serif}>{step.title}</h3>
                 <p className="text-sm text-warm-gray leading-relaxed" style={f.sans}>{step.desc}</p>
@@ -119,13 +119,13 @@ export default function ServicesPage() {
       <section className="bg-navy py-32 lg:py-44 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[.03] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "200px" }} />
         <ScrollReveal className="relative max-w-[1200px] mx-auto px-6 sm:px-10">
-          <Link href="/contact" className="sr arrow-link group block">
+          <Link href="/contact" className="sr-child arrow-link group block">
             <h2 className="text-4xl sm:text-6xl lg:text-8xl font-bold text-white leading-[1.05] group-hover:text-gold transition-colors duration-500" style={f.serif}>
               Let&apos;s talk.
               <svg className="inline-block w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 ml-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7l10 10M7 17h10V7" /></svg>
             </h2>
           </Link>
-          <p className="sr text-sm text-white/30 mt-8 max-w-[340px]" style={f.sans}>Not sure which service is right? That is fine. Most people are not. We will figure it out together.</p>
+          <p className="sr-child text-sm text-white/30 mt-8 max-w-[340px]" style={f.sans}>Not sure which service is right? That is fine. Most people are not. We will figure it out together.</p>
         </ScrollReveal>
       </section>
     </>
