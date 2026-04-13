@@ -144,3 +144,30 @@ body {
 .mix-blend-difference {
   mix-blend-mode: difference;
 }
+
+/* ── Horizontal scroll section ── */
+.h-scroll-wrap {
+  overflow: hidden;
+}
+.h-scroll-track {
+  display: flex;
+  gap: 1.25rem;
+  will-change: transform;
+}
+
+/* ── Slide from right ── */
+.sr-right {
+  opacity: 0;
+  transform: translateX(100px);
+}
+.sr-left {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+/* ── Word reveal ── */
+.reveal-word {
+  opacity: 0.15;
+  transition: none;
+  display: inline-block;
+}

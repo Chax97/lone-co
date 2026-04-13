@@ -22,7 +22,7 @@ export function useGsapReveal() {
           trigger: target,
           start: "top 80%",
           end: "top 5%",
-          toggleActions: "play reverse play reverse",
+          toggleActions: "play none none none",
         },
         opacity: 0,
         y: 60,
@@ -40,7 +40,7 @@ export function useGsapReveal() {
           trigger: group,
           start: "top 85%",
           end: "top 20%",
-          toggleActions: "play reverse play reverse",
+          toggleActions: "play none none none",
         },
         opacity: 0,
         y: 50,
@@ -61,6 +61,40 @@ export function useGsapReveal() {
         opacity: 0,
         y: 60,
         duration: 0.8,
+        ease: "power3.out",
+      });
+    });
+
+    // Slide from right
+    const rightTargets = el.querySelectorAll(".sr-right");
+    rightTargets.forEach((target) => {
+      gsap.to(target, {
+        scrollTrigger: {
+          trigger: target,
+          start: "top 85%",
+          end: "top 20%",
+          toggleActions: "play none none none",
+        },
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+    });
+
+    // Slide from left
+    const leftTargets = el.querySelectorAll(".sr-left");
+    leftTargets.forEach((target) => {
+      gsap.to(target, {
+        scrollTrigger: {
+          trigger: target,
+          start: "top 85%",
+          end: "top 20%",
+          toggleActions: "play none none none",
+        },
+        opacity: 1,
+        x: 0,
+        duration: 1,
         ease: "power3.out",
       });
     });

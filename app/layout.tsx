@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import BottomNav from "@/components/BottomNav";
 import Preloader from "@/components/Preloader";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="min-h-screen flex flex-col bg-cream text-charcoal">
         <Preloader />
         <Navigation />
+        <BottomNav />
         <main className="flex-1">{children}</main>
         <Footer />
         <CookieConsent />

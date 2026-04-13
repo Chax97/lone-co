@@ -8,7 +8,6 @@ const fh = { fontFamily: "var(--font-heading), sans-serif" };
 
 export default function Preloader() {
   const solidRef = useRef<HTMLDivElement>(null);
-  const splitWrapRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
 
@@ -40,30 +39,46 @@ export default function Preloader() {
     // Phase 3: Hold
     tl.to({}, { duration: 0.6 });
 
-    // Phase 4: Tagline + logo fade out together
-    tl.to([logoRef.current, ".tagline-word"], {
+    // Phase 4a: Tagline fades out
+    tl.to(".tagline-word", {
       opacity: 0,
-      duration: 0.3,
+      duration: 0.25,
       ease: "power3.in",
     });
 
-    // Phase 5: Swap solid overlay for split halves
-    tl.call(() => {
-      if (solidRef.current) solidRef.current.style.display = "none";
-      if (splitWrapRef.current) splitWrapRef.current.style.display = "block";
-    });
+    // Phase 4b: Logo slides to exact nav logo position — stays fully visible
+    tl.to(logoRef.current, {
+      x: () => {
+        const nav = document.querySelector("header a");
+        if (!nav || !logoRef.current) return -(window.innerWidth / 2 - 80);
+        const nr = nav.getBoundingClientRect();
+        const lr = logoRef.current.getBoundingClientRect();
+        return (nr.left + nr.width / 2) - (lr.left + lr.width / 2);
+      },
+      y: () => {
+        const nav = document.querySelector("header a");
+        if (!nav || !logoRef.current) return -(window.innerHeight / 2 - 36);
+        const nr = nav.getBoundingClientRect();
+        const lr = logoRef.current.getBoundingClientRect();
+        return (nr.top + nr.height / 2) - (lr.top + lr.height / 2);
+      },
+      scale: () => {
+        const nav = document.querySelector("header a");
+        if (!nav || !logoRef.current) return 0.13;
+        const nr = nav.getBoundingClientRect();
+        const lr = logoRef.current.getBoundingClientRect();
+        return nr.width / lr.width;
+      },
+      duration: 0.85,
+      ease: "power3.inOut",
+    }, "<");
 
-    // Phase 6: Curtain reveal — top slides up, bottom slides down
-    tl.to(
-      ".split-top",
-      { yPercent: -100, duration: 0.7, ease: "power4.inOut" },
-      "+=0.05"
-    );
-    tl.to(
-      ".split-bottom",
-      { yPercent: 100, duration: 0.7, ease: "power4.inOut" },
-      "<"
-    );
+    // Phase 5: Slide overlay down simultaneously with logo slide
+    tl.to(solidRef.current, {
+      yPercent: 100,
+      duration: 0.85,
+      ease: "power4.inOut",
+    }, "<");
   }, []);
 
   if (done) return null;
@@ -73,14 +88,8 @@ export default function Preloader() {
       {/* Solid overlay — visible during zoom + tagline */}
       <div ref={solidRef} className="absolute inset-0 bg-obsidian" />
 
-      {/* Split halves — hidden until phase 5 */}
-      <div ref={splitWrapRef} className="absolute inset-0 hidden">
-        <div className="split-top absolute top-0 left-0 right-0 h-1/2 bg-obsidian" />
-        <div className="split-bottom absolute bottom-0 left-0 right-0 h-1/2 bg-obsidian" />
-      </div>
-
-      {/* Logo */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Logo — z-10 keeps it above the sliding overlay */}
+      <div className="absolute inset-0 flex items-center justify-center z-10">
         <div ref={logoRef} className="opacity-0">
           <span
             className="text-[4rem] sm:text-[6rem] lg:text-[8rem] font-extrabold text-white tracking-tight whitespace-nowrap leading-none block"

@@ -15,11 +15,16 @@ const fh = { fontFamily: "var(--font-heading), sans-serif" };
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 30);
+      setHidden(y > window.innerHeight * 0.8);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,8 +34,10 @@ export default function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        hidden
+          ? "-translate-y-full opacity-0"
+          : scrolled
           ? "bg-obsidian/95 backdrop-blur-md shadow-lg shadow-black/10"
           : "bg-transparent"
       }`}

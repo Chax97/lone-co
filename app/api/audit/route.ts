@@ -120,8 +120,8 @@ function checkOutdatedLibs($: cheerio.CheerioAPI): CheckResult {
   ];
   const found: string[] = [];
   const srcs: string[] = [];
-  $("script[src]").each((_, el) => srcs.push(($(el).attr("src") || "").toLowerCase()));
-  $("link[href]").each((_, el) => srcs.push(($(el).attr("href") || "").toLowerCase()));
+  $("script[src]").each((_, el) => { srcs.push(($(el).attr("src") || "").toLowerCase()); });
+  $("link[href]").each((_, el) => { srcs.push(($(el).attr("href") || "").toLowerCase()); });
   for (const [pattern, label] of patterns) { if (srcs.some((s) => s.includes(pattern)) && !found.includes(label)) found.push(label); }
   const pass = found.length === 0;
   return { name: "Up to date software", pass, detail: pass ? "Current" : found.slice(0, 3).join(", "), penalty: pass ? 0 : Math.min(found.length * 5, 15) };
