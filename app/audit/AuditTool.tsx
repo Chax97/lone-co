@@ -282,7 +282,7 @@ export default function AuditPage() {
   const totalPass = results.reduce((n, c) => n + c.items.filter((i) => i.status === "pass").length, 0);
   const totalFail = results.reduce((n, c) => n + c.items.filter((i) => i.status === "fail").length, 0);
   const proposalCategories = results.length > 0
-    ? [...results].sort((a, b) => a.score - b.score).slice(0, results.filter((c) => c.score < 75).length >= 3 ? 4 : 3)
+    ? [...results].filter((c) => c.score <= 80).sort((a, b) => a.score - b.score).slice(0, 4)
     : [];
 
   const fd = { fontFamily: "var(--font-display), serif" };

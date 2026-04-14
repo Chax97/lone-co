@@ -154,8 +154,31 @@ function checkResponseTime(ms: number): CheckResult {
 }
 
 function checkCookieConsent($: cheerio.CheerioAPI, html: string): CheckResult {
-  const patterns = ["cookie-consent", "cookie-notice", "cookie-banner", "cookieconsent", "gdpr", "cc-banner", "cookie-law", "cookie_notice", "CookieConsent", "cookies-eu", "cookiepro", "onetrust", "cookie-popup", "trustarc"];
-  const pass = patterns.some((p) => html.includes(p));
+  // Text/class patterns in HTML
+  const htmlPatterns = [
+    "cookie-consent", "cookie-notice", "cookie-banner", "cookieconsent",
+    "gdpr", "cc-banner", "cookie-law", "cookie_notice", "CookieConsent",
+    "cookies-eu", "cookiepro", "onetrust", "cookie-popup", "trustarc",
+    "cookiebot", "CookieBot", "cookiefirst", "cookieyes", "cookie-yes",
+    "termly", "osano", "klaro", "tarteaucitron", "cookieinformation",
+    "iubenda", "complianz", "borlabs", "civic-cookie", "cookiescript",
+    "js-cookie", "cookie_bar", "cookie-bar", "cookie-alert", "cookie-wall",
+    "we use cookies", "We use cookies", "cookie policy", "Cookie Policy",
+    "data-cookieconsent", "data-cookie-consent",
+  ];
+  // Script src domains used by third-party consent platforms
+  const scriptDomains = [
+    "cookiebot.com", "cookiepro.com", "cookielaw.org", "onetrust.com",
+    "cookiefirst.com", "cookieyes.com", "termly.io", "osano.com",
+    "cookie-script.com", "cookieinformation.com", "iubenda.com",
+    "trustarc.com", "quantcast.mgr.consensu.org", "cdn.privacy-mgmt.com",
+    "consentmanager.net", "usercentrics.eu", "cookiehub.com",
+  ];
+  const htmlPass = htmlPatterns.some((p) => html.includes(p));
+  const scriptPass = scriptDomains.some((domain) =>
+    $("script[src]").toArray().some((el) => ($(el).attr("src") ?? "").includes(domain))
+  );
+  const pass = htmlPass || scriptPass;
   return { name: "Cookie consent banner", pass, detail: pass ? "Found" : "Not found", penalty: pass ? 0 : 3 };
 }
 
