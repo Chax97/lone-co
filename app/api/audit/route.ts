@@ -269,7 +269,7 @@ export async function POST(req: NextRequest) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#1E3A5F;border-radius:10px;padding:28px 32px;"><tr><td>
 <h2 style="margin:0 0 10px;font-family:Georgia,serif;font-size:20px;color:#fff;font-weight:normal;">Want us to fix these?</h2>
 <p style="margin:0 0 20px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.5);">Book a free 30 minute call and we will walk you through what needs fixing.</p>
-<div style="text-align:center;"><a href="https://calendly.com/loneandco" style="display:inline-block;padding:12px 28px;background:#C5A55A;color:#1E3A5F;font-size:13px;font-weight:bold;text-decoration:none;border-radius:8px;">Book a free call</a></div>
+<div style="text-align:center;"><a href="https://calendly.com/loneandco/30min" style="display:inline-block;padding:12px 28px;background:#C5A55A;color:#1E3A5F;font-size:13px;font-weight:bold;text-decoration:none;border-radius:8px;">Book a free call</a></div>
 </td></tr></table>
 </td></tr>
 <tr><td style="padding:20px 40px 32px;text-align:center;border-top:1px solid #E8E4DE;">

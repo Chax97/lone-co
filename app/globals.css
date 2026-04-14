@@ -64,10 +64,17 @@ body::-webkit-scrollbar {
 
 /* ── Service row hover ── */
 .service-row {
-  transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding-right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .service-row:hover {
   padding-left: 1.5rem;
+}
+.service-row-right:hover {
+  padding-left: 0;
+  padding-right: 1.5rem;
+}
+.service-row-right:hover h3 {
+  color: var(--gold);
 }
 
 /* ── Link arrow ── */

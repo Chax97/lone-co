@@ -65,13 +65,15 @@ export default function BottomNav() {
             </Link>
           );
         })}
-        <Link
-          href="/contact"
+        <a
+          href="https://calendly.com/loneandco/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           className="ml-1 px-5 sm:px-6 py-2.5 bg-gold text-navy text-[.7rem] sm:text-xs font-semibold tracking-wider uppercase rounded-full hover:bg-gold-light transition-all"
           style={fh}
         >
           Let&apos;s talk
-        </Link>
+        </a>
       </nav>
     </div>
   );

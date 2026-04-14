@@ -301,7 +301,14 @@ function HeroSection() {
     const honeycomb = honeycombRef.current;
     if (!content) return;
 
-    // Start each hero item hidden individually
+    // Return visit — preloader already ran, show content instantly
+    if (sessionStorage.getItem("preloader-done-flag")) {
+      gsap.set(content.querySelectorAll(".hero-item"), { y: 0, opacity: 1 });
+      if (honeycomb) gsap.set(honeycomb, { x: 0, opacity: 1 });
+      return;
+    }
+
+    // First visit — hide items and animate in once preloader lifts
     gsap.set(content.querySelectorAll(".hero-item"), { y: 40, opacity: 0 });
     if (honeycomb) gsap.set(honeycomb, { x: 60, opacity: 0 });
 
@@ -309,7 +316,6 @@ function HeroSection() {
       if (hasAnimated.current) return;
       hasAnimated.current = true;
       const tl = gsap.timeline();
-      // Each element slides in with a stagger
       tl.to(content.querySelectorAll(".hero-item"), {
         y: 0, opacity: 1, duration: 1.1, stagger: 0.2, ease: "power3.out",
       });
@@ -319,7 +325,6 @@ function HeroSection() {
     };
 
     window.addEventListener("preloader-done", runAnimation, { once: true });
-    // Fallback: if preloader already finished or isn't present
     const fallback = setTimeout(runAnimation, 5000);
     return () => {
       window.removeEventListener("preloader-done", runAnimation);
@@ -359,8 +364,10 @@ function HeroSection() {
             </p>
 
             <div className="hero-item mt-10">
-              <Link
-                href="/contact"
+              <a
+                href="https://calendly.com/loneandco/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 pl-7 pr-2 py-2 bg-white text-navy text-sm font-semibold tracking-wide rounded-full hover:bg-gold transition-all"
                 style={fh}
               >
@@ -370,7 +377,7 @@ function HeroSection() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                   </svg>
                 </span>
-              </Link>
+              </a>
             </div>
 
           </div>
@@ -608,14 +615,6 @@ export default function HomeClient() {
         </ScrollReveal>
         <div className="max-w-[1200px] mx-auto px-6 sm:px-10 mt-10">
           <ScrollReveal>
-            <div className="sr mb-4">
-              <span className="inline-flex items-center gap-2 bg-white/[.06] border border-white/[.08] rounded-md px-3 py-1.5">
-                <span className="w-2 h-2 rounded-sm bg-slate" />
-                <span className="text-[.6rem] text-white/70 font-semibold tracking-wider uppercase" style={fh}>Use cases</span>
-              </span>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal>
             <div className="sr text-center">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white heading-legacy" style={fd}>
                 Our <span className="text-slate">technology</span> was built to solve <span className="text-slate">real world</span> challenges.
@@ -707,12 +706,11 @@ export default function HomeClient() {
           <p className="sr text-xs font-semibold tracking-[.25em] uppercase text-gold mb-14 text-center" style={fh}>Services</p>
           <div className="sr-stagger">
             {services.map((s, i) => (
-              <Link key={s.num} href={s.href} className={`sr-child service-row group block py-10 lg:py-12 ${i === 0 ? "border-t " : ""}border-b border-light-gray`}>
+              <Link key={s.num} href={s.href} className={`sr-child service-row ${i % 2 !== 0 ? "service-row-right" : ""} group block py-10 lg:py-12 ${i === 0 ? "border-t " : ""}border-b border-light-gray`}>
                 <div className={`flex items-center gap-6 lg:gap-10 ${i % 2 === 0 ? "" : "lg:flex-row-reverse lg:text-right"}`}>
                   <span className="text-sm text-gold font-semibold flex-shrink-0" style={fh}>{s.num}</span>
-                  <h3 className="text-lg lg:text-2xl font-bold text-obsidian group-hover:text-navy transition-colors flex-1 heading-upper" style={fd}>{s.title}</h3>
-                  <span className="text-xs text-gold font-semibold flex-shrink-0 hidden sm:block tracking-wider uppercase" style={fh}>{s.price}</span>
-                  <svg className="w-5 h-5 text-light-gray group-hover:text-gold transition-colors flex-shrink-0 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7l10 10M7 17h10V7" /></svg>
+                  <h3 className="text-lg lg:text-2xl font-bold text-obsidian group-hover:text-gold transition-colors duration-300 flex-1 heading-upper" style={fd}>{s.title}</h3>
+                  <svg className="w-5 h-5 text-light-gray flex-shrink-0 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7l10 10M7 17h10V7" /></svg>
                 </div>
               </Link>
             ))}
@@ -720,69 +718,6 @@ export default function HomeClient() {
         </ScrollReveal>
       </section>
 
-      {/* ═══ BUILD WITH AI ═══ */}
-      <section className="bg-navy py-24 lg:py-36 overflow-hidden">
-        <ScrollReveal className="max-w-[1200px] mx-auto px-6 sm:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-16 lg:gap-20 items-center">
-            {/* Left: layered text + image */}
-            <div className="sr-once relative py-6 px-4">
-              {/* "BUILD" — behind image */}
-              <div className="relative z-[1] text-center -mb-[1.2rem] sm:-mb-[1.5rem]">
-                <span
-                  className="text-[3rem] sm:text-[4.2rem] lg:text-[5.1rem] font-extrabold text-white leading-[1] tracking-tight heading-upper whitespace-nowrap"
-                  style={fd}
-                >
-                  Build
-                </span>
-              </div>
-
-              {/* Image — middle layer */}
-              <div className="relative z-[2] mx-auto w-[33%] sm:w-[29%] aspect-[4/3] rounded-xl overflow-hidden shadow-2xl shadow-black/40">
-                <Image
-                  src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=450&fit=crop&q=80"
-                  alt="Business professional"
-                  fill
-                  className="object-cover"
-                  sizes="350px"
-                />
-              </div>
-
-              {/* "WITH AI." — in front of image */}
-              <div className="relative z-[3] text-center -mt-[1.2rem] sm:-mt-[1.5rem]">
-                <span
-                  className="text-[3rem] sm:text-[4.2rem] lg:text-[5.1rem] font-extrabold text-gold leading-[1] tracking-tight heading-upper whitespace-nowrap"
-                  style={fd}
-                >
-                  with AI.
-                </span>
-              </div>
-            </div>
-
-            {/* Right: get in touch */}
-            <div className="sr-once">
-              <h3
-                className="text-2xl sm:text-3xl font-extrabold text-white mb-5 heading-upper"
-                style={fd}
-              >
-                Free AI audit
-              </h3>
-              <p className="text-sm text-white/50 leading-relaxed mb-8" style={fb}>
-                30 minutes. We map your tasks, calculate what you spend on each, and show you exactly which ones AI can handle. You walk away with a clear plan, whether you work with us or not.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-3 px-7 py-3.5 bg-white text-obsidian text-xs font-semibold tracking-wider uppercase rounded-full hover:bg-gold transition-all hover:-translate-y-0.5"
-                style={fh}
-              >
-                Book your free audit
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
 
     </main>
   );

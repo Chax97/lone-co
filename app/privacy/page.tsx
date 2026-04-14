@@ -8,21 +8,27 @@ export const metadata: Metadata = {
 export default function PrivacyPolicy() {
   const lastUpdated = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   const font = {
-    serif: { fontFamily: "var(--font-playfair), Georgia, 'Times New Roman', serif" },
-    sans: { fontFamily: "var(--font-inter), 'Helvetica Neue', Arial, sans-serif" },
-    mono: { fontFamily: "var(--font-montserrat), 'Helvetica Neue', Arial, sans-serif" },
+    serif: { fontFamily: "var(--font-display), serif" },
+    sans: { fontFamily: "var(--font-body), sans-serif" },
+    mono: { fontFamily: "var(--font-heading), sans-serif" },
   };
 
   return (
     <>
-      <section className="bg-[#1E3A5F] pt-36 pb-16 lg:pt-44 lg:pb-20 relative overflow-hidden">
+      <section className="bg-obsidian pt-40 pb-16 lg:pt-52 lg:pb-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[.04] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "200px" }} />
-        <div className="relative max-w-6xl mx-auto px-6 sm:px-10">
-          <p className="text-xs font-semibold tracking-[.15em] uppercase text-[#C5A55A] mb-4" style={font.mono}>Legal</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-3" style={font.serif}>Privacy Policy</h1>
-          <p className="text-white/40 text-sm" style={font.sans}>Last updated: {lastUpdated}</p>
+        <div className="hidden lg:block absolute pointer-events-none" style={{
+          top: "-10%", right: "-15%", width: "65%", height: "120%",
+          background: "linear-gradient(160deg, var(--slate) 0%, #7B8AF7 40%, var(--slate) 100%)",
+          clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          zIndex: 0,
+        }} />
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6 sm:px-10">
+          <p className="text-[.65rem] font-semibold tracking-[.2em] uppercase text-gold mb-4" style={font.mono}>Legal</p>
+          <h1 className="text-4xl sm:text-5xl lg:text-[4.5rem] font-bold text-white leading-[1.05]" style={font.serif}>Privacy Policy</h1>
+          <p className="text-white/40 text-sm mt-3" style={font.sans}>Last updated: {lastUpdated}</p>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-[#C5A55A]/15" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gold/10" />
       </section>
 
       <section className="bg-[#FAF8F4] py-16 lg:py-20">

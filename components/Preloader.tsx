@@ -11,6 +11,16 @@ export default function Preloader() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    // Skip full animation on return visits within the same session
+    if (sessionStorage.getItem("preloader-seen")) {
+      sessionStorage.setItem("preloader-done-flag", "1");
+      gsap.set("header a", { opacity: 1 });
+      window.dispatchEvent(new CustomEvent("preloader-done"));
+      setDone(true);
+      return;
+    }
+    sessionStorage.setItem("preloader-seen", "1");
+
     document.body.style.overflow = "hidden";
     // Hide the real nav logo so it doesn't show while animated logo is in flight
     gsap.set("header a", { opacity: 0 });
@@ -52,6 +62,7 @@ export default function Preloader() {
 
     // Dispatch event as reveal begins so homepage animates in with the curtain
     tl.call(() => {
+      sessionStorage.setItem("preloader-done-flag", "1");
       window.dispatchEvent(new CustomEvent("preloader-done"));
     });
 

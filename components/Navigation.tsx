@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { href: "/services", label: "Services" },
-  { href: "/audit", label: "Free Audit" },
+  { href: "/audit", label: "Free Website Audit" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -74,8 +74,10 @@ export default function Navigation() {
 
           {/* Right — CTA */}
           <div className="hidden md:flex items-center flex-shrink-0">
-            <Link
-              href="/contact"
+            <a
+              href="https://calendly.com/loneandco/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-2.5 bg-white text-navy text-[.7rem] font-semibold tracking-wider uppercase rounded-full hover:bg-gold transition-all"
               style={fh}
             >
@@ -83,7 +85,7 @@ export default function Navigation() {
               <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
               </svg>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile toggle */}
@@ -118,8 +120,10 @@ export default function Navigation() {
               </Link>
             ))}
             <div className="mt-4 px-3">
-              <Link
-                href="/contact"
+              <a
+                href="https://calendly.com/loneandco/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white text-navy text-xs font-semibold tracking-wider uppercase rounded-full hover:bg-gold transition-colors"
                 style={fh}
               >
@@ -127,7 +131,7 @@ export default function Navigation() {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>
-              </Link>
+              </a>
             </div>
           </div>
         )}

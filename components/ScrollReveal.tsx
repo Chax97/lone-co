@@ -15,92 +15,91 @@ export function useGsapReveal() {
     const el = ref.current;
     if (!el) return;
 
-    const targets = el.querySelectorAll(".sr");
-    targets.forEach((target) => {
-      gsap.from(target, {
-        scrollTrigger: {
-          trigger: target,
-          start: "top 80%",
-          end: "top 5%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        y: 60,
-        duration: 0.8,
-        ease: "power3.out",
+    const ctx = gsap.context(() => {
+      // Fade + slide up
+      el.querySelectorAll(".sr").forEach((target) => {
+        gsap.from(target, {
+          scrollTrigger: {
+            trigger: target,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+          opacity: 0,
+          y: 60,
+          duration: 0.8,
+          ease: "power3.out",
+        });
       });
-    });
 
-    const staggerGroups = el.querySelectorAll(".sr-stagger");
-    staggerGroups.forEach((group) => {
-      const children = group.querySelectorAll(".sr-child");
-      if (children.length === 0) return;
-      gsap.from(children, {
-        scrollTrigger: {
-          trigger: group,
-          start: "top 85%",
-          end: "top 20%",
-          toggleActions: "play none none none",
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power3.out",
+      // Stagger children
+      el.querySelectorAll(".sr-stagger").forEach((group) => {
+        const children = group.querySelectorAll(".sr-child");
+        if (children.length === 0) return;
+        gsap.from(children, {
+          scrollTrigger: {
+            trigger: group,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+          opacity: 0,
+          y: 50,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+        });
       });
-    });
 
-    // One-time reveals (no reverse)
-    const onceTargets = el.querySelectorAll(".sr-once");
-    onceTargets.forEach((target) => {
-      gsap.from(target, {
-        scrollTrigger: {
-          trigger: target,
-          start: "top 85%",
-        },
-        opacity: 0,
-        y: 60,
-        duration: 0.8,
-        ease: "power3.out",
+      // One-time reveals
+      el.querySelectorAll(".sr-once").forEach((target) => {
+        gsap.from(target, {
+          scrollTrigger: {
+            trigger: target,
+            start: "top 85%",
+          },
+          opacity: 0,
+          y: 60,
+          duration: 0.8,
+          ease: "power3.out",
+        });
       });
-    });
 
-    // Slide from right
-    const rightTargets = el.querySelectorAll(".sr-right");
-    rightTargets.forEach((target) => {
-      gsap.to(target, {
-        scrollTrigger: {
-          trigger: target,
-          start: "top 85%",
-          end: "top 20%",
-          toggleActions: "play none none none",
-        },
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        ease: "power3.out",
+      // Slide from right
+      el.querySelectorAll(".sr-right").forEach((target) => {
+        gsap.to(target, {
+          scrollTrigger: {
+            trigger: target,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          ease: "power3.out",
+        });
       });
-    });
 
-    // Slide from left
-    const leftTargets = el.querySelectorAll(".sr-left");
-    leftTargets.forEach((target) => {
-      gsap.to(target, {
-        scrollTrigger: {
-          trigger: target,
-          start: "top 85%",
-          end: "top 20%",
-          toggleActions: "play none none none",
-        },
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        ease: "power3.out",
+      // Slide from left
+      el.querySelectorAll(".sr-left").forEach((target) => {
+        gsap.to(target, {
+          scrollTrigger: {
+            trigger: target,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          ease: "power3.out",
+        });
       });
-    });
+    }, el);
+
+    // Refresh after a tick so positions are correct after navigation
+    const rafId = requestAnimationFrame(() => ScrollTrigger.refresh());
 
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      ctx.revert();
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -114,15 +113,18 @@ export function useHeroReveal() {
     const el = ref.current;
     if (!el) return;
 
-    const children = el.querySelectorAll(".hero-reveal");
-    gsap.from(children, {
-      opacity: 0,
-      y: 80,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power3.out",
-      delay: 0.2,
-    });
+    const ctx = gsap.context(() => {
+      gsap.from(el.querySelectorAll(".hero-reveal"), {
+        opacity: 0,
+        y: 80,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power3.out",
+        delay: 0.2,
+      });
+    }, el);
+
+    return () => ctx.revert();
   }, []);
 
   return ref;
@@ -135,23 +137,22 @@ export function useParallax() {
     const el = ref.current;
     if (!el) return;
 
-    const bg = el.querySelector(".parallax-bg");
-    if (!bg) return;
+    const ctx = gsap.context(() => {
+      const bg = el.querySelector(".parallax-bg");
+      if (!bg) return;
+      gsap.to(bg, {
+        scrollTrigger: {
+          trigger: el,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+        y: -100,
+        ease: "none",
+      });
+    }, el);
 
-    gsap.to(bg, {
-      scrollTrigger: {
-        trigger: el,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-      y: -100,
-      ease: "none",
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return ref;
