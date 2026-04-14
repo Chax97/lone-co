@@ -17,7 +17,7 @@ export default function TextReveal({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -47,13 +47,13 @@ export default function TextReveal({
   const words = text.split(" ");
 
   return (
-    <div ref={containerRef} className={className} style={style}>
+    <span ref={containerRef} className={className} style={style}>
       {words.map((word, i) => (
         <span key={i} className="reveal-word">
           {word}
           {i < words.length - 1 ? "\u00A0" : ""}
         </span>
       ))}
-    </div>
+    </span>
   );
 }

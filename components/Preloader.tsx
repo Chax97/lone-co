@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-const fd = { fontFamily: "var(--font-display), sans-serif" };
 const fh = { fontFamily: "var(--font-heading), sans-serif" };
 
 export default function Preloader() {
@@ -13,37 +12,47 @@ export default function Preloader() {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
+    // Hide the real nav logo so it doesn't show while animated logo is in flight
+    gsap.set("header a", { opacity: 0 });
 
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.style.overflow = "";
+        gsap.set("header a", { opacity: 1 });
         setDone(true);
       },
     });
 
-    // Phase 1: Logo zooms in
+    // Phase 1: Logo slides in from bottom
     tl.fromTo(
       logoRef.current,
-      { scale: 5, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1.2, ease: "power3.out" }
+      { y: 80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.4, ease: "power3.out" }
     );
 
     // Phase 2: Tagline slides in
     tl.fromTo(
       ".tagline-word",
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: "power3.out" },
-      "-=0.3"
+      { y: 0, opacity: 1, duration: 0.55, stagger: 0.08, ease: "power3.out" },
+      "-=0.4"
     );
 
     // Phase 3: Hold
-    tl.to({}, { duration: 0.6 });
+    tl.to({}, { duration: 1.0 });
 
-    // Phase 4a: Tagline fades out
+    // Phase 4a: Tagline slides out upward
     tl.to(".tagline-word", {
+      y: -24,
       opacity: 0,
-      duration: 0.25,
+      duration: 0.45,
+      stagger: 0.05,
       ease: "power3.in",
+    });
+
+    // Dispatch event as reveal begins so homepage animates in with the curtain
+    tl.call(() => {
+      window.dispatchEvent(new CustomEvent("preloader-done"));
     });
 
     // Phase 4b: Logo slides to exact nav logo position — stays fully visible
@@ -69,16 +78,19 @@ export default function Preloader() {
         const lr = logoRef.current.getBoundingClientRect();
         return nr.width / lr.width;
       },
-      duration: 0.85,
+      duration: 1.1,
       ease: "power3.inOut",
-    }, "<");
+    });
 
     // Phase 5: Slide overlay down simultaneously with logo slide
     tl.to(solidRef.current, {
       yPercent: 100,
-      duration: 0.85,
+      duration: 1.1,
       ease: "power4.inOut",
     }, "<");
+
+    // Fade real nav logo in as animated logo arrives — seamless handoff
+    tl.to("header a", { opacity: 1, duration: 0.2, ease: "none" }, "-=0.2");
   }, []);
 
   if (done) return null;
@@ -92,10 +104,9 @@ export default function Preloader() {
       <div className="absolute inset-0 flex items-center justify-center z-10">
         <div ref={logoRef} className="opacity-0">
           <span
-            className="text-[4rem] sm:text-[6rem] lg:text-[8rem] font-extrabold text-white tracking-tight whitespace-nowrap leading-none block"
-            style={fd}
+            className="brand-logo text-[4rem] sm:text-[6rem] lg:text-[8rem] text-white whitespace-nowrap leading-none block"
           >
-            Lone <span className="text-gold">&amp;</span> Co
+            L O N E{" "}<span className="brand-ampersand">&amp;</span>{" "}C O<span className="brand-dot" />
           </span>
         </div>
       </div>

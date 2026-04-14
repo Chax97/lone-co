@@ -1,21 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #1E3A5F;
+  --navy: #1A2238;
   --gold: #C5A55A;
   --gold-light: #D4B76A;
+  --slate: #9DAAF2;
   --obsidian: #1E1E24;
   --charcoal: #404048;
   --warm-gray: #8A8680;
   --light-gray: #E8E4DE;
-  --cream: #FAF8F4;
-  --ivory: #F5F0E8;
+  --cream: #F7F5F0;
+  --ivory: #F0EDE6;
 }
 
 @theme inline {
   --color-navy: var(--navy);
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
+  --color-slate: var(--slate);
   --color-obsidian: var(--obsidian);
   --color-charcoal: var(--charcoal);
   --color-warm-gray: var(--warm-gray);
@@ -29,12 +31,23 @@
   color: var(--navy);
 }
 
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background-color: var(--cream);
   color: var(--charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /* ── Marquee ticker ── */
@@ -165,9 +178,77 @@ body {
   transform: translateX(-100px);
 }
 
+/* ── Nav text roll ── */
+.nav-roll-clip {
+  display: block;
+  overflow: hidden;
+  height: 1.3em;
+  line-height: 1.3em;
+}
+.nav-roll-inner {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.nav-roll-inner::after {
+  content: attr(data-text);
+  display: block;
+  height: 1.3em;
+}
+.nav-roll:hover .nav-roll-inner {
+  transform: translateY(-1.3em);
+}
+
 /* ── Word reveal ── */
 .reveal-word {
   opacity: 0.15;
   transition: none;
   display: inline-block;
+}
+
+/* ── Brand logo ── */
+.brand-logo {
+  font-family: var(--font-brand), serif;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 600;
+}
+.brand-ampersand {
+  background: linear-gradient(135deg, var(--navy), var(--slate));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.brand-dot {
+  display: inline-block;
+  width: 0.18em;
+  height: 0.18em;
+  background: var(--slate);
+  border-radius: 50%;
+  vertical-align: 0.15em;
+  margin-left: 0.05em;
+}
+
+/* ── Hero accent shape ── */
+.hero-accent-bg {
+  position: absolute;
+  top: -10%;
+  right: -15%;
+  width: 65%;
+  height: 120%;
+  background: linear-gradient(160deg, var(--slate) 0%, #7B8AF7 40%, var(--slate) 100%);
+  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%, 12% 55%);
+  z-index: 0;
+}
+
+
+/* ── Hide scrollbar ── */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Legacy heading style ── */
+.heading-legacy {
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
