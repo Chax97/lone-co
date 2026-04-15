@@ -473,15 +473,13 @@ export default function AuditPage() {
             )}
 
             {/* Bottom CTA */}
-            <div className="bg-obsidian rounded-xl p-8 mt-4">
-              <div className="max-w-md">
-                <h3 className="text-xl text-white mb-2" style={fd}>Want us to do a deep dive?</h3>
-                <p className="text-sm text-white/45 mb-6 leading-relaxed" style={fb}>Our full expert audit covers every page, looks at what your competitors are doing, and gives you a clear action plan.</p>
-                <div className="flex gap-3 flex-wrap">
-                  <a href="https://calendly.com/loneandco/30min" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-2.5 bg-gold hover:bg-gold-light text-obsidian font-semibold text-sm rounded-lg transition-all hover:-translate-y-0.5 no-underline" style={fh}>Get the full audit</a>
-                  <button onClick={resetAudit} className="inline-flex items-center px-6 py-2.5 border border-white/15 hover:border-white/30 text-white/70 font-semibold text-sm rounded-lg transition-all cursor-pointer bg-transparent" style={fh}>Audit another site</button>
+            <div className="bg-obsidian rounded-xl p-10 mt-4 text-center">
+                <h3 className="text-2xl text-white mb-3" style={fd}>Want us to do a deep dive?</h3>
+                <p className="text-sm text-white/45 mb-8 leading-relaxed max-w-sm mx-auto" style={fb}>Our full expert audit covers every page, looks at what your competitors are doing, and gives you a clear action plan.</p>
+                <div className="flex gap-3 flex-wrap justify-center">
+                  <a href="https://calendly.com/loneandco/30min" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-7 py-3 bg-gold hover:bg-gold-light text-obsidian font-semibold text-sm rounded-lg transition-all hover:-translate-y-0.5 no-underline" style={fh}>Get the full audit</a>
+                  <button onClick={resetAudit} className="inline-flex items-center px-7 py-3 border border-white/15 hover:border-white/30 text-white/70 font-semibold text-sm rounded-lg transition-all cursor-pointer bg-transparent" style={fh}>Audit another site</button>
                 </div>
-              </div>
             </div>
           </div>
         </section>

@@ -207,7 +207,8 @@ function gradeFromScore(score: number): string {
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
-  const { url, email } = await req.json();
+  const body = await req.json();
+  const { url, email } = body;
   if (!url || typeof url !== "string") return NextResponse.json({ error: "URL is required" }, { status: 400 });
 
   let normUrl = url.trim();
@@ -306,6 +307,25 @@ export async function POST(req: NextRequest) {
         subject: `Your website audit results — Grade ${overallGrade} (${displayScore}/100)`,
         html: emailHtml,
       });
+    }
+
+    if (process.env.GOOGLE_SHEET_URL) {
+      try {
+        await fetch(process.env.GOOGLE_SHEET_URL, {
+          method: "POST",
+          body: JSON.stringify({
+            type: "audit",
+            url: normUrl,
+            email,
+            visitors: body.visitors || "",
+            avgVal: body.avgVal || "",
+            score: displayScore,
+            grade: overallGrade,
+          }),
+        });
+      } catch {
+        // Don't block the audit response if sheets fails
+      }
     }
 
     return NextResponse.json({ categories: auditCategories, score: displayScore, grade: overallGrade, finalUrl });
