@@ -233,7 +233,7 @@ export default function AuditPage() {
       const res = await fetch("/api/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: normUrl, email }),
+        body: JSON.stringify({ url: normUrl, email, visitors, avgVal }),
       });
       const data = await res.json();
       timers.forEach(clearTimeout);
