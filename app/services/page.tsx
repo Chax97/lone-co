@@ -12,7 +12,6 @@ const serviceDetails = [
     id: "chatbot",
     num: "01",
     title: "AI Chatbot Integration",
-    price: "From £1,950 · fixed price",
     dark: false,
     body: "A chatbot built around your business. Trained on your products, your policies, and the questions your customers actually ask. It handles enquiries, captures leads, and books appointments without anyone on your team needing to do a thing.",
     includes: ["Custom design and build", "Integrated into your existing website", "Lead capture and CRM connection", "Appointment booking", "Knowledge base setup", "30 day post launch support"],
@@ -21,7 +20,6 @@ const serviceDetails = [
     id: "optimisation",
     num: "02",
     title: "Website Optimisation",
-    price: "From £2,500 · fixed price",
     dark: true,
     body: "Your website needs solid foundations before any AI tools will work properly. We fix what is broken, speed things up, and make sure Google can actually find and understand your business.",
     includes: ["Core Web Vitals performance fixes", "On page SEO audit and improvements", "Schema markup implementation", "Mobile first design review", "AI readiness technical setup", "Competitor benchmark report"],
@@ -30,7 +28,6 @@ const serviceDetails = [
     id: "strategy",
     num: "03",
     title: "AI Strategy & Custom Solutions",
-    price: "Bespoke · scoped to your needs",
     dark: false,
     body: "You know AI could help your business somewhere, but you are not sure where. We spend time understanding your operations, find where AI would have the most impact, and build a plan that makes commercial sense.",
     includes: ["Business and process mapping", "AI opportunity assessment", "Prioritised roadmap with ROI estimates", "Vendor and technology recommendations", "Implementation support (optional)", "Ongoing advisory retainer (optional)"],
@@ -82,7 +79,6 @@ export default function ServicesPage() {
               <div>
                 <span className="sr-child text-sm text-gold font-semibold" style={f.mono}>{svc.num}</span>
                 <h2 className={`sr text-3xl sm:text-4xl font-bold mt-3 mb-3 leading-tight ${svc.dark ? "text-white" : "text-obsidian"}`} style={f.serif}>{svc.title}</h2>
-                <p className="sr-child text-sm text-gold font-semibold" style={f.mono}>{svc.price}</p>
                 <Link href="/contact" className="sr-child arrow-link inline-flex items-center gap-3 text-gold hover:text-gold-light transition-colors mt-8" style={f.mono}>
                   <span className="text-sm font-semibold tracking-wide">Enquire</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7l10 10M7 17h10V7" /></svg>
